@@ -4,45 +4,22 @@
       "name": "Införskaffa bast",
       "color": "#4E0E9F",
       "id": 4,
-      "hourly_rate": "400"
+      "hourlyRate": "400"
     },
     {
       "name": "",
       "color": "#4E0E9F",
       "id": 5,
-      "hourly_rate": "400"
+      "hourlyRate": "400"
     }
   ],
   "tasks": [
     {
       "title": "köpa socker",
-      "id": 3,
-      "projectId": "1"
+      "id": 3
     }
   ],
-  "timelogs": [
-    {
-      "start": 1668091991501,
-      "taskId": 3,
-      "time": 0,
-      "id": "L_mi47b",
-      "end": "2022-10-12T10:49:33.081Z"
-    },
-    {
-      "start": 1668092314344,
-      "taskId": 3,
-      "time": 0,
-      "id": "ruZGWSr",
-      "end": "2022-10-12T10:49:33.081Z"
-    },
-    {
-      "start": 1668157237213,
-      "taskId": 3,
-      "time": 4,
-      "id": "CAFstkt",
-      "end": "2022-10-12T10:49:33.081Z"
-    }
-  ],
+  "timelogs": [],
   "invoices": [
     {
       "id": "<random id>",
