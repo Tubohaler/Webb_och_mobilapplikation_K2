@@ -3,6 +3,8 @@ import logo from "../assets/logo.svg";
 
 import styled from "styled-components";
 
+import Projects from "./Projects";
+
 type Props = {};
 
 const StyledWrapper = styled.section`
@@ -160,7 +162,9 @@ export default function Overview({}: Props) {
         <OverviewInvoiceSmallBox>Invoice</OverviewInvoiceSmallBox>
       </OverviewBox>
       <ProjectsTitle>Projects</ProjectsTitle>
-      <ProjectsBox></ProjectsBox>
+      <ProjectsBox>
+        <Projects />
+      </ProjectsBox>
       <TasksTitle>Tasks</TasksTitle>
       <TasksBox></TasksBox>
       <TimerTitle>Timer</TimerTitle>

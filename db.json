@@ -1,22 +1,16 @@
 {
   "projects": [
     {
-      "name": "Införskaffa bast",
+      "projectName": "Införskaffa bast",
       "color": "#4E0E9F",
-      "id": 4,
-      "hourlyRate": "400"
-    },
-    {
-      "name": "",
-      "color": "#4E0E9F",
-      "id": 5,
+      "projectId": 4,
       "hourlyRate": "400"
     }
   ],
   "tasks": [
     {
       "title": "köpa socker",
-      "id": 3
+      "taskId": 3
     }
   ],
   "timelogs": [],

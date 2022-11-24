@@ -26,9 +26,9 @@ interface Props {
 }
 
 const intitalStateProject = {
-  name: "",
+  projectName: "",
   color: "",
-  id: 0,
+  projectId: 0,
   hourly_rate: 0,
 };
 
@@ -43,9 +43,9 @@ export const ProjectsProvider = ({ children }: Props) => {
   //   const [input, setInput] = useState<ProjectType>("");
   //   const [input2, setInput2] = useState<ProjectType>("");
   const [projects, setProjects] = useState<ProjectType>({
-    name: "none",
+    projectName: "none",
     color: "none",
-    id: 1,
+    projectId: 1,
     hourlyRate: 0,
   });
   //   const [todos, setTodos] = useState<ProjectType>([]);
