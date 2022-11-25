@@ -6,6 +6,6 @@ export const deleteProject = async (projectId: number): Promise<ProjectType[]> =
         const data = await axios.delete(`http://localhost:3000/projects/${projectId}`);
         return data.data
     } catch(err) {
-        throw{message: "Problemos when deleting this project.", status: 404}
+        throw {message: "Problemos when deleting this project.", status: 404}
     }
 }

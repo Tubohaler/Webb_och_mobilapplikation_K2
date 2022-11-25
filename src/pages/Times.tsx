@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getAllProjects } from "../api/getAllProjects";
-import { deleteProject } from "../api/deleteProject";
-import { ProjectType } from "../types/projectTypes";
-// import getAllProjects from "../api/getAllProjects";
+import { getTimes } from "../api/getTimes";
+import { deleteTimes } from "../api/deleteTimes";
+import { TimesType } from "../types/timesTypes";
+
 import styled from "styled-components";
 
 const Buttons = styled.button`
@@ -35,33 +35,32 @@ const TodoListBar = styled.li`
   justify-content: space-between;
   align-items: center;
   margin: 1em;
+  width: 70vw;
 `;
 
 interface Props {
-  projects: ProjectType;
+  times: TimesType;
 }
 
-export default function Projects() {
-  const [projects, setProjects] = useState<ProjectType[]>([]);
+export default function Times() {
+  const [times, setTimes] = useState<TimesType[]>([]);
 
-  async function getProjectData() {
-    const data = await getAllProjects();
-    setProjects(data);
+  async function getTimeData() {
+    const data = await getTimes();
+    setTimes(data);
   }
 
   useEffect(() => {
-    getProjectData();
+    getTimeData();
   }, []);
 
   return (
     <TodoList>
-      {projects.map((project) => (
-        <TodoListBar key={project.projectId}>
-          <div color={project.color}>...</div>
-          {project.projectName}
-          <Buttons onClick={() => deleteProject(project.projectId)}>
-            Delete
-          </Buttons>
+      {times.map((time) => (
+        <TodoListBar key={time.id}>
+          {time.start}
+          {time.end}
+          <Buttons onClick={() => deleteTimes(time.id)}>Delete</Buttons>
         </TodoListBar>
       ))}
     </TodoList>

@@ -4,6 +4,9 @@ import logo from "../assets/logo.svg";
 import styled from "styled-components";
 
 import Projects from "./Projects";
+import Tasks from "./Tasks";
+import Times from "./Times";
+import Invoice from "./Invoice";
 
 type Props = {};
 
@@ -40,9 +43,8 @@ const OverviewBox = styled.div`
 const OverviewTitle = styled.h2`
   position: static;
   top: 0;
-  margin-top: rem;
   margin-left: 1.2rem;
-
+  color: black;
   font-size: 1.3rem;
 `;
 
@@ -83,11 +85,13 @@ const OverviewInvoiceSmallBox = styled.div`
 const ProjectsBox = styled.div`
   position: static;
   margin-left: 1.2rem;
+  padding: 1.5em;
 
-  width: 90vw;
-  height: 10rem;
+  width: 80vw;
   background: #a931b4;
   border-radius: 35px;
+  overflow: auto;
+  height: 19em;
 `;
 
 const ProjectsTitle = styled.h2`
@@ -95,6 +99,7 @@ const ProjectsTitle = styled.h2`
   top: 0;
   margin-left: 1.2rem;
   font-size: 1.3rem;
+  color: black;
 `;
 
 const TasksTitle = styled.h2`
@@ -102,16 +107,19 @@ const TasksTitle = styled.h2`
   top: 0;
   margin-left: 1.2rem;
   font-size: 1.3rem;
+  color: black;
 `;
 
 const TasksBox = styled.div`
   position: static;
-  margin-left: 1.2rem;
+  margin-left: 1rem;
+  padding: 1.5em;
 
-  width: 90vw;
-  height: 10rem;
+  width: 80vw;
   background: #126923;
   border-radius: 35px;
+  overflow: auto;
+  height: 19em;
 `;
 
 const TimerTitle = styled.h2`
@@ -119,16 +127,19 @@ const TimerTitle = styled.h2`
   top: 0;
   margin-left: 1.2rem;
   font-size: 1.3rem;
+  color: black;
 `;
 
 const TimerBox = styled.div`
   position: static;
-  margin-left: 1.2rem;
+  margin-left: 1rem;
+  padding: 1.5em;
 
-  width: 90vw;
-  height: 10rem;
+  width: 80vw;
+  height: 19em;
   background: #b53a4d;
   border-radius: 35px;
+  overflow: auto;
 `;
 
 const InvoicesTitle = styled.h2`
@@ -136,6 +147,7 @@ const InvoicesTitle = styled.h2`
   top: 0;
   margin-left: 1.2rem;
   font-size: 1.3rem;
+  color: black;
 `;
 
 const InvoicesBox = styled.div`
@@ -166,11 +178,18 @@ export default function Overview({}: Props) {
         <Projects />
       </ProjectsBox>
       <TasksTitle>Tasks</TasksTitle>
-      <TasksBox></TasksBox>
+      <TasksBox>
+        {" "}
+        <Tasks />
+      </TasksBox>
       <TimerTitle>Timer</TimerTitle>
-      <TimerBox></TimerBox>
+      <TimerBox>
+        <Times />
+      </TimerBox>
       <InvoicesTitle>Invoices</InvoicesTitle>
-      <InvoicesBox></InvoicesBox>
+      <InvoicesBox>
+        <Invoice />
+      </InvoicesBox>
     </StyledWrapper>
   );
 }

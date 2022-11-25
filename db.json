@@ -1,19 +1,61 @@
 {
   "projects": [
     {
-      "projectName": "Införskaffa bast",
+      "projectName": "Införskaffa påsar",
       "color": "#4E0E9F",
-      "projectId": 4,
+      "projectId": 1,
+      "hourlyRate": "400"
+    },
+    {
+      "projectName": "hämta barn",
+      "color": "#b53a4d",
+      "projectId": 2,
+      "hourlyRate": "400"
+    },
+    {
+      "projectName": "ringa mamma",
+      "color": "#126923",
+      "projectId": 3,
       "hourlyRate": "400"
     }
   ],
   "tasks": [
     {
       "title": "köpa socker",
-      "taskId": 3
+      "id": 1
+    },
+    {
+      "title": "köpa socker",
+      "id": 2
+    },
+    {
+      "title": "köpa socker",
+      "id": 3
     }
   ],
-  "timelogs": [],
+  "timelogs": [
+    {
+      "start": 1668091991501,
+      "taskId": 3,
+      "time": 0,
+      "id": "1",
+      "end": "2021-10-12T10:49:33.081Z"
+    },
+    {
+      "start": 1668091991501,
+      "taskId": 2,
+      "time": 0,
+      "id": "2",
+      "end": "2020-10-12T10:49:33.081Z"
+    },
+    {
+      "start": 1668091991501,
+      "taskId": 1,
+      "time": 0,
+      "id": "3",
+      "end": "2025-10-12T10:49:33.081Z"
+    }
+  ],
   "invoices": [
     {
       "id": "<random id>",
