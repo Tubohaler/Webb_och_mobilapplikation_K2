@@ -1,6 +1,10 @@
 import React, { Fragment, useState } from "react";
 import styled from "styled-components";
+import Select from "react-select";
 import { ProjectContext } from "../contexts/ProjectContext";
+import { getAllProjects } from "../api/getAllProjects";
+import { ProjectType } from "../types/projectTypes";
+
 const ModalBlock = styled.div`
   align-items: center;
   bottom: 0;
@@ -39,8 +43,7 @@ const ModalContainer = styled.div`
   border-radius: 2rem;
   display: flex;
   flex-direction: column;
-  height: 25rem;
-  max-height: 75vh;
+  max-height: 100vh;
   max-width: 850px;
   padding: 0 0.8rem;
   width: 100%;
@@ -103,8 +106,39 @@ const ModalName = styled.div`
   color: black;
 `;
 
-const Modal = ({ title, footer, children, active, hideModal }) => {
-  const { input, setInput, input2, setInput2, addProject } = useTotals();
+const Buttons = styled.button`
+  font-size: 2em;
+  color: white;
+  background-color: rgba(255, 53, 41, 0.56);
+  margin: 0.2em;
+  margin-left: 0.5em;
+  padding: 0.25em 1em;
+  box-shadow: 3px 4px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+`;
+
+interface ModalProps {
+  title: string;
+  footer: JSX.Element;
+  children?: React.ReactNode;
+  active: boolean;
+  hideModal: () => void;
+  projects: ProjectType[];
+  selectedProject: number | undefined;
+  setSelectedProject: (projectId: number) => void;
+}
+
+const Modal = ({
+  title,
+  footer,
+  children,
+  active,
+  hideModal,
+  projects,
+  selectedProject,
+  setSelectedProject,
+}: ModalProps) => {
+  // const { input, setInput, input2, setInput2, addProject } = useTotals();
 
   return (
     <Fragment>
@@ -113,31 +147,46 @@ const Modal = ({ title, footer, children, active, hideModal }) => {
           <ModalOverlay onClick={() => hideModal()}></ModalOverlay>
           <ModalContainer>
             <ModalHeader>
-              <ModalTitle>{title}</ModalTitle>
+              {/* <ModalTitle>{title}</ModalTitle> */}
               <ModalClose onClick={() => hideModal()}>X</ModalClose>
             </ModalHeader>
             <ModalInputDiv>
-              <ModalName>Create new Todo</ModalName>
-              <NameLabel for="todo">Todo:</NameLabel>
-              <InputNewTodo
-                type="text"
-                value={input}
+              <ModalName>Invoice</ModalName>
+              <NameLabel>Customer name</NameLabel>
+              <input type="text"></input>
+              <NameLabel>Project connected to task:</NameLabel>
+              <Select
+                placeholder="select project"
+                value={projects.find(
+                  (project) => project.projectId === selectedProject
+                )}
+                options={projects}
+                onChange={(obj) => {
+                  console.log(obj);
+                  if (obj === null) return;
+                  setSelectedProject(obj.projectId);
+                }}
+                getOptionLabel={(x) => x.projectName}
+                // getOptionValue={(x) => x.projectId}
+              />
+              {/* <br /> */}
+              <NameLabel>Task:</NameLabel>
+              <Select
+                // value={input}
+                value={"inputTodo"}
                 id="todos"
                 required
-                onChange={(e) => setInput(e.target.value)}
+                // onChange={(e) => setInput(e.target.value)}
               />
-              <NameLabel>Project name:</NameLabel>
-              <ProjectInput
-                type="text"
-                value={input2}
-                id="project"
-                required
-                onChange={(e) => setInput2(e.target.value)}
-              />
-              <NameLabel onChange={(e) => addProject(e.project.color)}>
-                Select your favorite color:
-              </NameLabel>
-              <input type="color" />
+
+              <NameLabel>Project name</NameLabel>
+              <input></input>
+              <NameLabel>Number of tasks</NameLabel>
+              <input type="number"></input>
+              <NameLabel>Unit</NameLabel>
+              <input type="number"></input>
+              <NameLabel>sek/Unit</NameLabel>
+              <input type="number"></input>
             </ModalInputDiv>
             <ModalBody>{children}</ModalBody>
             <ModalFooter>{footer}</ModalFooter>

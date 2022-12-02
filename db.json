@@ -65,6 +65,33 @@
       "project": "<project id>",
       "customer_name": "Ryan",
       "created_date": "2022-11-16T10:49:33.081Z"
+    },
+    {
+      "id": "1",
+      "status": "ej betald",
+      "due_date": "2021-12-15T10:49:33.081Z",
+      "amount": 9001,
+      "project": "<project id>",
+      "customer_name": "Ryan",
+      "created_date": "2022-11-16T10:49:33.081Z"
+    },
+    {
+      "id": "2",
+      "status": "ej betald",
+      "due_date": "2021-12-15T10:49:33.081Z",
+      "amount": 100,
+      "project": "<project id>",
+      "customer_name": "Ryan",
+      "created_date": "2022-11-16T10:49:33.081Z"
+    },
+    {
+      "id": "3",
+      "status": "ej betald",
+      "due_date": "2020-12-15T10:49:33.081Z",
+      "amount": 100000,
+      "project": "<project id>",
+      "customer_name": "Ryan",
+      "created_date": "2022-11-16T10:49:33.081Z"
     }
   ]
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { InvoiceType } from "../types/invoiceTypes";
 
-export const deleteInvoice = async(id: number): Promise<InvoiceType[]> => {
+export const deleteInvoice = async(id: string): Promise<InvoiceType[]> => {
     try {
         const data = await axios.delete(`http://localhost:3000/invoices/${id}`)
         return data.data

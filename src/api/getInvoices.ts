@@ -1,7 +1,7 @@
 import axios from "axios";
 import { InvoiceType } from "../types/invoiceTypes";
 
-export const getInvoices = async (id: number): Promise<InvoiceType[]> => {
+export const getInvoices = async (): Promise<InvoiceType[]> => {
     try {
         const data = await axios.get(`http://localhost:3000/invoices`);
         return data.data

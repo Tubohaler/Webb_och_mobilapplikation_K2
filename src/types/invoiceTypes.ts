@@ -1,9 +1,9 @@
 export interface InvoiceType {
-    id: number,
+    id: string,
       status: string,
-      due_date: number,
+      due_date: string,
       amount: number,
-      project: number,
+      project: string,
       customer_name: string,
-      created_date: number
+      created_date: string
 }

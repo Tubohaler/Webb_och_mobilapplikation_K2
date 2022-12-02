@@ -8,9 +8,17 @@ import { getAllTasks } from "../api/getAllTasks";
 
 import styled from "styled-components";
 import { InvoiceType } from "../types/invoiceTypes";
+import Modal from "../layout/Modal";
+import { ProjectType } from "../types/projectTypes";
+
+const ModuleName = styled.h1`
+  text-align: left;
+  font-size: 2em;
+  margin-left: 0.7em;
+`;
 
 const Buttons = styled.button`
-  font-size: 1em;
+  font-size: 2em;
   color: white;
   background-color: rgba(255, 53, 41, 0.56);
   margin: 0.2em;
@@ -47,29 +55,71 @@ interface Props {
 }
 
 export default function Invoice() {
-  const [prices, setprice] = useState<InvoiceType[]>([]);
+  const [invoices, setInvoices] = useState<InvoiceType[]>([]);
+  const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [selectedProject, setSelectedProject] = useState<number | undefined>();
 
   async function getInvoiceData() {
     const data = await getInvoices();
-    setprice(data);
+    setInvoices(data);
   }
+
+  async function getAllProjectData() {
+    const data = await getAllProjects();
+    setProjects(data);
+  }
+
+  const test = {
+    id: "3",
+    status: "ej betald",
+    due_date: "2020-12-15T10:49:33.081Z",
+    amount: 100000,
+    project: "<project id>",
+    customer_name: "Ryan",
+    created_date: "2022-11-16T10:49:33.081Z",
+  };
 
   useEffect(() => {
     getInvoiceData();
+    getAllProjectData();
   }, []);
+
+  //   useEffect(() => {
+  //     selectedProjectID()
+  //   })
 
   return (
     <div>
       <TodoList>
-        {prices.map((price) => (
-          <TodoListBar key={price.id}>
-            {price.amount}
-
-            <Buttons onClick={() => deleteInvoice(price.id)}>Delete</Buttons>
+        {invoices.map((invoice) => (
+          <TodoListBar key={invoice.id}>
+            {invoice.amount}
+            <Buttons onClick={() => deleteInvoice(invoice.id)}>Delete</Buttons>
+            <Modal
+              title={"create invoice"}
+              //   active={active}
+              active={true}
+              //   hideModal={() => setActive(false)}
+              hideModal={() => {
+                return;
+              }}
+              footer={
+                <Buttons
+                  onClick={() => {
+                    postInvoice(test);
+                  }}
+                >
+                  Save invoice
+                </Buttons>
+              }
+              projects={projects}
+              selectedProject={selectedProject}
+              setSelectedProject={setSelectedProject}
+            />
+            {/* <Buttons onClick={() => postInvoice(test)}>Send invoice</Buttons> */}
           </TodoListBar>
         ))}
       </TodoList>
-      <Buttons onClick={() => postInvoice()}>Send invoice</Buttons>
     </div>
   );
 }
