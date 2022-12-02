@@ -1,9 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import styled from "styled-components";
 import Select from "react-select";
-import { ProjectContext } from "../contexts/ProjectContext";
-import { getAllProjects } from "../api/getAllProjects";
+// import { ProjectContext } from "../contexts/ProjectContext";
+// import { getAllProjects } from "../api/getAllProjects";
 import { ProjectType } from "../types/projectTypes";
+import { TaskContext } from "../contexts/TaskContext";
 
 const ModalBlock = styled.div`
   align-items: center;
@@ -126,6 +127,8 @@ interface ModalProps {
   projects: ProjectType[];
   selectedProject: number | undefined;
   setSelectedProject: (projectId: number) => void;
+  taskId: number | null;
+  updateTaskId: (id: number) => void;
 }
 
 const Modal = ({
@@ -137,8 +140,10 @@ const Modal = ({
   projects,
   selectedProject,
   setSelectedProject,
+  taskId,
+  updateTaskId,
 }: ModalProps) => {
-  // const { input, setInput, input2, setInput2, addProject } = useTotals();
+  const { todos } = useContext(TaskContext);
 
   return (
     <Fragment>
@@ -172,17 +177,10 @@ const Modal = ({
               {/* <br /> */}
               <NameLabel>Task:</NameLabel>
               <Select
-                // value={input}
-                value={"inputTodo"}
-                id="todos"
-                required
-                // onChange={(e) => setInput(e.target.value)}
+                placeholder="select tasks"
+                value={todos.filter((todo) => todo.id === selectedProject)}
+                onChange={(e) => setInput(e.target.value)}
               />
-
-              <NameLabel>Project name</NameLabel>
-              <input></input>
-              <NameLabel>Number of tasks</NameLabel>
-              <input type="number"></input>
               <NameLabel>Unit</NameLabel>
               <input type="number"></input>
               <NameLabel>sek/Unit</NameLabel>

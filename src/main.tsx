@@ -7,6 +7,7 @@ import Overview from "./pages/Overview";
 
 import App from "./App";
 import "./index.css";
+import { TaskProvider } from "./contexts/TaskContext";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ProjectsProvider>
-      <RouterProvider router={router} />
+      <TaskProvider>
+        <RouterProvider router={router} />
+      </TaskProvider>
     </ProjectsProvider>
   </React.StrictMode>
 );

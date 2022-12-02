@@ -10,6 +10,7 @@ import styled from "styled-components";
 import { InvoiceType } from "../types/invoiceTypes";
 import Modal from "../layout/Modal";
 import { ProjectType } from "../types/projectTypes";
+import { TaskType } from "../types/tasksTypes";
 
 const ModuleName = styled.h1`
   text-align: left;
@@ -56,8 +57,9 @@ interface Props {
 
 export default function Invoice() {
   const [invoices, setInvoices] = useState<InvoiceType[]>([]);
-  const [projects, setProjects] = useState<ProjectType[]>([]);
+  const [projects, setProjects] = useState<ProjectType[]>([]); // hämta från Context istället
   const [selectedProject, setSelectedProject] = useState<number | undefined>();
+  const [taskId, setTaskId] = useState<number | null>(null);
 
   async function getInvoiceData() {
     const data = await getInvoices();
@@ -67,6 +69,12 @@ export default function Invoice() {
   async function getAllProjectData() {
     const data = await getAllProjects();
     setProjects(data);
+  }
+
+  async function selectedProjectID() {}
+
+  function updateTaskId(id: number): void {
+    setTaskId(id);
   }
 
   const test = {
@@ -84,9 +92,9 @@ export default function Invoice() {
     getAllProjectData();
   }, []);
 
-  //   useEffect(() => {
-  //     selectedProjectID()
-  //   })
+  useEffect(() => {
+    selectedProjectID();
+  }, []);
 
   return (
     <div>
@@ -115,6 +123,8 @@ export default function Invoice() {
               projects={projects}
               selectedProject={selectedProject}
               setSelectedProject={setSelectedProject}
+              taskId={taskId}
+              updateTaskId={updateTaskId}
             />
             {/* <Buttons onClick={() => postInvoice(test)}>Send invoice</Buttons> */}
           </TodoListBar>

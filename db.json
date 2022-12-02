@@ -22,15 +22,18 @@
   "tasks": [
     {
       "title": "köpa socker",
-      "id": 1
+      "id": 1,
+      "projectId": 1
     },
     {
       "title": "köpa socker",
-      "id": 2
+      "id": 2,
+      "projectId": 2
     },
     {
       "title": "köpa socker",
-      "id": 3
+      "id": 3,
+      "projectId": 3
     }
   ],
   "timelogs": [

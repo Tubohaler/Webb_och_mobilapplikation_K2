@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../assets/logo.svg";
 
 import styled from "styled-components";
 
 import Projects from "./Projects";
+import { getAllTasks } from "../api/getAllTasks";
 import Tasks from "./Tasks";
 import Times from "./Times";
 import Invoice from "./Invoice";
+import { TaskContext } from "../contexts/TaskContext";
 
 type Props = {};
 
@@ -161,6 +163,11 @@ const InvoicesBox = styled.div`
 `;
 
 export default function Overview({}: Props) {
+  const { updateTodos } = useContext(TaskContext);
+  useEffect(() => {
+    const data = getAllTasks();
+    updateTodos(data);
+  }, []);
   return (
     <StyledWrapper>
       <div>

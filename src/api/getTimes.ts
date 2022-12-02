@@ -8,4 +8,4 @@ export const getTimes = async (): Promise<TimesType[]> => {
     }catch(err) {
         throw {message: "Problem getting timelogs.", status: 404}
     }
-}
+};

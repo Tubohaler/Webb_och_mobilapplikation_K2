@@ -13,16 +13,17 @@ interface Props {
 
 export interface TaskContextType {
   todos: TaskType[];
-  setTodos: React.Dispatch<React.SetStateAction<TaskType[]>>;
+  updateTodos: (newData: TaskType[]) => void;
 }
 
 export const TaskContext = createContext<TaskContextType | null>(null);
 
 export const TaskProvider = ({ children }: Props) => {
   const [todos, setTodos] = useState<TaskType[]>([]);
-  return (
-    <TaskContext.Provider value={{ todos, setTodos }}>
-      {children}
-    </TaskContext.Provider>
-  );
+  const value: TaskContextType = { todos, updateTodos };
+  function updateTodos(newData: TaskType[]) {
+    setTodos(newData);
+  }
+
+  return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 };
