@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { TaskType } from "../types/tasksTypes";
 
 const initialTaskState = {
@@ -20,10 +20,23 @@ export const TaskContext = createContext<TaskContextType | null>(null);
 
 export const TaskProvider = ({ children }: Props) => {
   const [todos, setTodos] = useState<TaskType[]>([]);
-  const value: TaskContextType = { todos, updateTodos };
-  function updateTodos(newData: TaskType[]) {
+
+  function updateTodos(newData: TaskType[]): void {
     setTodos(newData);
   }
 
+  const value: TaskContextType = {
+    todos,
+    updateTodos,
+  };
+
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 };
+
+export function useTasks() {
+  const context = useContext(TaskContext);
+  if (!context) {
+    throw new Error("Hooks not used inside same context.");
+  }
+  return context;
+}

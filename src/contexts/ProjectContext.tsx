@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { ProjectType } from "../types/projectTypes";
 
 export type ProjectContext = {
@@ -33,3 +33,10 @@ export const ProjectsProvider = ({ children }: Props) => {
     </ProjectContext.Provider>
   );
 };
+export function useProjects() {
+  const context = useContext(ProjectContext);
+  if (!context) {
+    throw new Error("Hooks not used inside same context.");
+  }
+  return context;
+}

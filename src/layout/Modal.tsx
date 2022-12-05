@@ -5,6 +5,9 @@ import Select from "react-select";
 // import { getAllProjects } from "../api/getAllProjects";
 import { ProjectType } from "../types/projectTypes";
 import { TaskContext } from "../contexts/TaskContext";
+import { TaskType } from "../types/tasksTypes";
+import { useTasks } from "../contexts/TaskContext";
+import { useProjects } from "../contexts/ProjectContext";
 
 const ModalBlock = styled.div`
   align-items: center;
@@ -143,7 +146,9 @@ const Modal = ({
   taskId,
   updateTaskId,
 }: ModalProps) => {
-  const { todos } = useContext(TaskContext);
+  const { todos } = useTasks();
+  const { oneProject } = useProjects();
+  const [selectedTask, setSelectedTask] = useState<number>();
 
   return (
     <Fragment>
@@ -178,10 +183,17 @@ const Modal = ({
               <NameLabel>Task:</NameLabel>
               <Select
                 placeholder="select tasks"
-                value={todos.filter((todo) => todo.id === selectedProject)}
-                onChange={(e) => setInput(e.target.value)}
+                options={todos.filter(
+                  (todo) => todo.projectId === selectedProject
+                )}
+                onChange={(e) => {
+                  if (!e) return;
+                  setSelectedTask(e.id);
+                }}
+                getOptionLabel={(y) => y.title}
               />
               <NameLabel>Unit</NameLabel>
+
               <input type="number"></input>
               <NameLabel>sek/Unit</NameLabel>
               <input type="number"></input>

@@ -163,11 +163,16 @@ const InvoicesBox = styled.div`
 `;
 
 export default function Overview({}: Props) {
-  const { updateTodos } = useContext(TaskContext);
+  const context = useContext(TaskContext);
   useEffect(() => {
-    const data = getAllTasks();
-    updateTodos(data);
+    async function init() {
+      const data = await getAllTasks();
+      if (!context) return;
+      context.updateTodos(data);
+    }
+    init();
   }, []);
+
   return (
     <StyledWrapper>
       <div>
