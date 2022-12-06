@@ -1,6 +1,6 @@
 export interface ProjectType {
     projectName: string;
     color: string;
-    projectId: number;
+    id: number;
     hourlyRate: number;
 }

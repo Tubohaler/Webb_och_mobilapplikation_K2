@@ -8,6 +8,10 @@ import { TaskContext } from "../contexts/TaskContext";
 import { TaskType } from "../types/tasksTypes";
 import { useTasks } from "../contexts/TaskContext";
 import { useProjects } from "../contexts/ProjectContext";
+import { useTimeLogs } from "../contexts/TimeContext";
+import { postInvoice } from "../api/postInvoice";
+
+import dayjs from "dayjs";
 
 const ModalBlock = styled.div`
   align-items: center;
@@ -123,11 +127,9 @@ const Buttons = styled.button`
 
 interface ModalProps {
   title: string;
-  footer: JSX.Element;
   children?: React.ReactNode;
   active: boolean;
   hideModal: () => void;
-  projects: ProjectType[];
   selectedProject: number | undefined;
   setSelectedProject: (projectId: number) => void;
   taskId: number | null;
@@ -136,20 +138,33 @@ interface ModalProps {
 
 const Modal = ({
   title,
-  footer,
   children,
   active,
   hideModal,
-  projects,
   selectedProject,
   setSelectedProject,
   taskId,
   updateTaskId,
 }: ModalProps) => {
   const { todos } = useTasks();
-  const { oneProject } = useProjects();
-  const [selectedTask, setSelectedTask] = useState<number>();
+  const { projects } = useProjects();
+  const { times } = useTimeLogs();
+  const [selectedTask, setSelectedTask] = useState<TaskType>();
 
+  const filteredTimeLogs = times.filter(
+    (timelog) => selectedTask && timelog.taskId === selectedTask.id
+  );
+  const [hourlyRate, setHourlyRate] = useState<number>(0);
+  const [clientName, setClientName] = useState<string>("");
+
+  const summedTime = filteredTimeLogs.reduce((acc, time) => {
+    const date1 = dayjs(time.end);
+    const date2 = dayjs(time.start);
+    const hours: number = date1.diff(date2, "hours", true);
+    return acc + hours;
+  }, 0);
+
+  const dueDate = dayjs().add(30, "days");
   return (
     <Fragment>
       {active && (
@@ -157,27 +172,29 @@ const Modal = ({
           <ModalOverlay onClick={() => hideModal()}></ModalOverlay>
           <ModalContainer>
             <ModalHeader>
-              {/* <ModalTitle>{title}</ModalTitle> */}
               <ModalClose onClick={() => hideModal()}>X</ModalClose>
             </ModalHeader>
             <ModalInputDiv>
               <ModalName>Invoice</ModalName>
               <NameLabel>Customer name</NameLabel>
-              <input type="text"></input>
+              <input
+                type="text"
+                onChange={(e) => setClientName(e.target.value)}
+                value={clientName}
+              />
+
               <NameLabel>Project connected to task:</NameLabel>
               <Select
                 placeholder="select project"
                 value={projects.find(
-                  (project) => project.projectId === selectedProject
+                  (project) => project.id === selectedProject
                 )}
                 options={projects}
                 onChange={(obj) => {
-                  console.log(obj);
                   if (obj === null) return;
-                  setSelectedProject(obj.projectId);
+                  setSelectedProject(obj.id);
                 }}
                 getOptionLabel={(x) => x.projectName}
-                // getOptionValue={(x) => x.projectId}
               />
               {/* <br /> */}
               <NameLabel>Task:</NameLabel>
@@ -188,18 +205,34 @@ const Modal = ({
                 )}
                 onChange={(e) => {
                   if (!e) return;
-                  setSelectedTask(e.id);
+                  setSelectedTask(e);
                 }}
                 getOptionLabel={(y) => y.title}
               />
-              <NameLabel>Unit</NameLabel>
+              {filteredTimeLogs && filteredTimeLogs.map((timelog) => <p>{}</p>)}
+              <NameLabel>Hourly rate</NameLabel>
 
-              <input type="number"></input>
-              <NameLabel>sek/Unit</NameLabel>
-              <input type="number"></input>
+              <input
+                type="number"
+                onChange={(e) => setHourlyRate(Number(e.target.value))}
+                value={hourlyRate}
+              ></input>
+
+              <NameLabel>total:{hourlyRate * summedTime}kr</NameLabel>
+              <Buttons
+                onClick={() => {
+                  postInvoice({
+                    status: "not paid",
+                    due_date: dueDate.toString(),
+                    amount: hourlyRate * summedTime,
+                    customer_name: clientName,
+                  });
+                }}
+              >
+                Save invoice
+              </Buttons>
             </ModalInputDiv>
             <ModalBody>{children}</ModalBody>
-            <ModalFooter>{footer}</ModalFooter>
           </ModalContainer>
         </ModalBlock>
       )}

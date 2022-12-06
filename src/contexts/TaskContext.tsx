@@ -1,12 +1,6 @@
 import React, { createContext, useState, useContext } from "react";
 import { TaskType } from "../types/tasksTypes";
 
-const initialTaskState = {
-  title: "",
-  id: 0,
-  projectId: "",
-};
-
 interface Props {
   children: React.ReactNode;
 }

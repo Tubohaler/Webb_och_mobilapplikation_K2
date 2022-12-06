@@ -4,6 +4,8 @@ import { deleteProject } from "../api/deleteProject";
 import { ProjectType } from "../types/projectTypes";
 // import getAllProjects from "../api/getAllProjects";
 import styled from "styled-components";
+import { useProjects } from "../contexts/ProjectContext";
+import { useTasks } from "../contexts/TaskContext";
 
 const Buttons = styled.button`
   font-size: 1em;
@@ -42,26 +44,17 @@ interface Props {
 }
 
 export default function Projects() {
-  const [projects, setProjects] = useState<ProjectType[]>([]);
-
-  async function getProjectData() {
-    const data = await getAllProjects();
-    setProjects(data);
-  }
-
-  useEffect(() => {
-    getProjectData();
-  }, []);
-
+  const { projects } = useProjects();
+  const { todos } = useTasks();
   return (
     <TodoList>
       {projects.map((project) => (
-        <TodoListBar key={project.projectId}>
-          <div color={project.color}>...</div>
+        <TodoListBar key={project.id}>
           {project.projectName}
-          <Buttons onClick={() => deleteProject(project.projectId)}>
-            Delete
-          </Buttons>
+          <span>
+            {todos.filter((todo) => project.id === todo.projectId).length}
+          </span>
+          <Buttons onClick={() => deleteProject(project.id)}>Delete</Buttons>
         </TodoListBar>
       ))}
     </TodoList>

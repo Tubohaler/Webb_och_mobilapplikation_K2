@@ -4,6 +4,8 @@ import { deleteTasks } from "../api/deleteTasks";
 import { TaskType } from "../types/tasksTypes";
 // import { ProjectType } from "../types/projectTypes";
 import styled from "styled-components";
+import { useTasks } from "../contexts/TaskContext";
+import { ProjectContext, useProjects } from "../contexts/ProjectContext";
 // import { ProjectContext } from "../contexts/ProjectContext";
 
 const Buttons = styled.button`
@@ -47,25 +49,21 @@ interface Props {
 }
 
 export default function Tasks() {
-  const [tasks, setTasks] = useState<TaskType[]>([]);
-  //   const [projects, setProjects] = useState<ProjectType[]>([]);
-
-  async function getTasksData() {
-    const data = await getAllTasks();
-    setTasks(data);
-  }
-
-  useEffect(() => {
-    getTasksData();
-  }, []);
-  console.log(tasks);
+  const { todos } = useTasks();
+  const { projects } = useProjects();
 
   return (
     <TodoList>
-      {tasks.map((task) => (
+      {todos.map((task) => (
         <TodoListBar key={task.id}>
-          {/* <TodoColor color={task.projectId}>...</TodoColor> */}
           {task.title}
+          <span>
+            {
+              projects.find((project) => project.id === task.projectId)
+                ?.projectName
+            }
+          </span>
+
           <Buttons onClick={() => deleteTasks(task.id)}>Delete</Buttons>
         </TodoListBar>
       ))}

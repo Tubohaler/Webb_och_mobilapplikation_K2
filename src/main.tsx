@@ -7,8 +7,10 @@ import Overview from "./pages/Overview";
 
 import App from "./App";
 import "./index.css";
-import { TaskProvider } from "./contexts/TaskContext";
 
+import { TaskProvider } from "./contexts/TaskContext";
+import { TimesProvider } from "./contexts/TimeContext";
+import { InvoiceProvider } from "./contexts/InvoiceContext";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,10 +26,14 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <ProjectsProvider>
-      <TaskProvider>
-        <RouterProvider router={router} />
-      </TaskProvider>
-    </ProjectsProvider>
+    <InvoiceProvider>
+      <TimesProvider>
+        <ProjectsProvider>
+          <TaskProvider>
+            <RouterProvider router={router} />
+          </TaskProvider>
+        </ProjectsProvider>
+      </TimesProvider>
+    </InvoiceProvider>
   </React.StrictMode>
 );

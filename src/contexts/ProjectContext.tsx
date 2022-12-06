@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
 import { ProjectType } from "../types/projectTypes";
 
-export type ProjectContext = {
-  projects: ProjectType;
-  setProjects: React.Dispatch<React.SetStateAction<ProjectType>>;
+export type ProjectTypeContext = {
+  projects: ProjectType[];
+  setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>;
 };
 
 interface Props {
@@ -17,15 +17,10 @@ const intitalStateProject = {
   hourly_rate: 0,
 };
 
-export const ProjectContext = createContext<ProjectContext | null>(null);
+export const ProjectContext = createContext<ProjectTypeContext | null>(null);
 
 export const ProjectsProvider = ({ children }: Props) => {
-  const [projects, setProjects] = useState<ProjectType>({
-    projectName: "none",
-    color: "none",
-    projectId: 1,
-    hourlyRate: 0,
-  });
+  const [projects, setProjects] = useState<ProjectType[]>([]);
   return (
     <ProjectContext.Provider value={{ projects, setProjects }}>
       {" "}

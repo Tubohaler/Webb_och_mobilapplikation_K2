@@ -8,7 +8,12 @@ import { getAllTasks } from "../api/getAllTasks";
 import Tasks from "./Tasks";
 import Times from "./Times";
 import Invoice from "./Invoice";
-import { TaskContext } from "../contexts/TaskContext";
+import { TaskContext, useTasks } from "../contexts/TaskContext";
+import { useProjects } from "../contexts/ProjectContext";
+import { useTimeLogs } from "../contexts/TimeContext";
+import { useInvoices } from "../contexts/InvoiceContext";
+
+import dayjs from "dayjs";
 
 type Props = {};
 
@@ -163,15 +168,33 @@ const InvoicesBox = styled.div`
 `;
 
 export default function Overview({}: Props) {
-  const context = useContext(TaskContext);
-  useEffect(() => {
-    async function init() {
-      const data = await getAllTasks();
-      if (!context) return;
-      context.updateTodos(data);
-    }
-    init();
-  }, []);
+  const { projects } = useProjects();
+  const { todos } = useTasks();
+  const { times } = useTimeLogs();
+  const { invoices } = useInvoices();
+
+  const today = dayjs();
+
+  const pastMonth = today.subtract(30, "days");
+
+  const filteredTimeLogs = times.filter((timelog) =>
+    pastMonth.isBefore(timelog.start, "days")
+  );
+
+  const summedTime = filteredTimeLogs.reduce((acc, time) => {
+    const date1 = dayjs(time.end);
+    const date2 = dayjs(time.start);
+    const hours: number = date1.diff(date2, "hours", true);
+    return acc + hours;
+  }, 0);
+
+  // const pastYear = dayjs().year(2022)
+
+  const invoiceSum = invoices.map((invoice) => invoice.amount);
+
+  const allInvoiceSum = invoiceSum.reduce((acc, value) => {
+    return acc + value;
+  }, 0);
 
   return (
     <StyledWrapper>
@@ -179,11 +202,25 @@ export default function Overview({}: Props) {
         <StyledLogo src={logo} className="logo" alt="logo" />
       </div>
       <OverviewTitle>Overview</OverviewTitle>
+
       <OverviewBox>
-        <OverviewProjectsSmallBox>Projects</OverviewProjectsSmallBox>
-        <OverviewTasksSmallBox>Tasks</OverviewTasksSmallBox>
-        <OverviewTimerSmallBox>Timer</OverviewTimerSmallBox>
-        <OverviewInvoiceSmallBox>Invoice</OverviewInvoiceSmallBox>
+        <OverviewProjectsSmallBox>
+          Total projects:{projects.length}
+        </OverviewProjectsSmallBox>
+        <OverviewTasksSmallBox>
+          {" "}
+          Total tasks:{todos.length}
+        </OverviewTasksSmallBox>
+        <OverviewTimerSmallBox>
+          Total hours:
+          {summedTime.toFixed(0)}
+        </OverviewTimerSmallBox>
+        <OverviewInvoiceSmallBox>
+          Total invoice:{invoices.length}
+        </OverviewInvoiceSmallBox>
+        <OverviewInvoiceSmallBox>
+          Total amount invoiced this year:{allInvoiceSum.toFixed(0)}kr
+        </OverviewInvoiceSmallBox>
       </OverviewBox>
       <ProjectsTitle>Projects</ProjectsTitle>
       <ProjectsBox>

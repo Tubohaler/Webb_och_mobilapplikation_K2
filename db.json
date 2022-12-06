@@ -3,20 +3,17 @@
     {
       "projectName": "Införskaffa påsar",
       "color": "#4E0E9F",
-      "projectId": 1,
-      "hourlyRate": "400"
+      "id": 1
     },
     {
       "projectName": "hämta barn",
       "color": "#b53a4d",
-      "projectId": 2,
-      "hourlyRate": "400"
+      "id": 2
     },
     {
       "projectName": "ringa mamma",
       "color": "#126923",
-      "projectId": 3,
-      "hourlyRate": "400"
+      "id": 3
     }
   ],
   "tasks": [
@@ -38,63 +35,55 @@
   ],
   "timelogs": [
     {
-      "start": 1668091991501,
+      "start": "2022-11-12T08:49:33.081Z",
       "taskId": 3,
       "time": 0,
       "id": "1",
-      "end": "2021-10-12T10:49:33.081Z"
+      "end": "2022-11-12T10:49:33.081Z"
     },
     {
-      "start": 1668091991501,
+      "start": "2022-11-14T07:49:33.081Z",
       "taskId": 2,
       "time": 0,
       "id": "2",
-      "end": "2020-10-12T10:49:33.081Z"
+      "end": "2022-11-14T10:49:33.081Z"
     },
     {
-      "start": 1668091991501,
+      "start": "2022-10-12T08:49:33.081Z",
       "taskId": 1,
       "time": 0,
       "id": "3",
-      "end": "2025-10-12T10:49:33.081Z"
+      "end": "2022-10-12T10:49:33.081Z"
     }
   ],
   "invoices": [
     {
-      "id": "<random id>",
-      "status": "ej betald",
-      "due_date": "2022-12-15T10:49:33.081Z",
-      "amount": 9001,
-      "project": "<project id>",
-      "customer_name": "Ryan",
-      "created_date": "2022-11-16T10:49:33.081Z"
+      "status": "not paid",
+      "due_date": "Thu, 05 Jan 2023 17:48:34 GMT",
+      "amount": 1000,
+      "customer_name": "Rolf",
+      "id": 1
     },
     {
-      "id": "1",
-      "status": "ej betald",
-      "due_date": "2021-12-15T10:49:33.081Z",
-      "amount": 9001,
-      "project": "<project id>",
-      "customer_name": "Ryan",
-      "created_date": "2022-11-16T10:49:33.081Z"
+      "status": "not paid",
+      "due_date": "Thu, 05 Jan 2023 17:49:23 GMT",
+      "amount": 1500,
+      "customer_name": "Max",
+      "id": 2
     },
     {
-      "id": "2",
-      "status": "ej betald",
-      "due_date": "2021-12-15T10:49:33.081Z",
-      "amount": 100,
-      "project": "<project id>",
-      "customer_name": "Ryan",
-      "created_date": "2022-11-16T10:49:33.081Z"
+      "status": "not paid",
+      "due_date": "Thu, 05 Jan 2023 17:49:42 GMT",
+      "amount": 1000,
+      "customer_name": "Tsubarashi",
+      "id": 3
     },
     {
-      "id": "3",
-      "status": "ej betald",
-      "due_date": "2020-12-15T10:49:33.081Z",
-      "amount": 100000,
-      "project": "<project id>",
-      "customer_name": "Ryan",
-      "created_date": "2022-11-16T10:49:33.081Z"
+      "status": "not paid",
+      "due_date": "Thu, 05 Jan 2023 17:49:42 GMT",
+      "amount": 1000,
+      "customer_name": "Tsubarashi",
+      "id": 4
     }
   ]
 }

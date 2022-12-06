@@ -11,6 +11,7 @@ import { InvoiceType } from "../types/invoiceTypes";
 import Modal from "../layout/Modal";
 import { ProjectType } from "../types/projectTypes";
 import { TaskType } from "../types/tasksTypes";
+import { useInvoices } from "../contexts/InvoiceContext";
 
 const ModuleName = styled.h1`
   text-align: left;
@@ -51,85 +52,42 @@ const TodoListBar = styled.li`
   width: 70vw;
 `;
 
-interface Props {
-  times: InvoiceType;
-}
-
 export default function Invoice() {
-  const [invoices, setInvoices] = useState<InvoiceType[]>([]);
-  const [projects, setProjects] = useState<ProjectType[]>([]); // hämta från Context istället
   const [selectedProject, setSelectedProject] = useState<number | undefined>();
   const [taskId, setTaskId] = useState<number | null>(null);
-
-  async function getInvoiceData() {
-    const data = await getInvoices();
-    setInvoices(data);
-  }
-
-  async function getAllProjectData() {
-    const data = await getAllProjects();
-    setProjects(data);
-  }
-
-  async function selectedProjectID() {}
+  const [active, setActive] = useState<boolean>(false);
+  const { invoices } = useInvoices();
 
   function updateTaskId(id: number): void {
     setTaskId(id);
   }
 
-  const test = {
-    id: "3",
-    status: "ej betald",
-    due_date: "2020-12-15T10:49:33.081Z",
-    amount: 100000,
-    project: "<project id>",
-    customer_name: "Ryan",
-    created_date: "2022-11-16T10:49:33.081Z",
-  };
-
-  useEffect(() => {
-    getInvoiceData();
-    getAllProjectData();
-  }, []);
-
-  useEffect(() => {
-    selectedProjectID();
-  }, []);
-
   return (
     <div>
+      <Buttons onClick={() => setActive(true)}>Create invoice</Buttons>
       <TodoList>
         {invoices.map((invoice) => (
           <TodoListBar key={invoice.id}>
-            {invoice.amount}
-            <Buttons onClick={() => deleteInvoice(invoice.id)}>Delete</Buttons>
-            <Modal
-              title={"create invoice"}
-              //   active={active}
-              active={true}
-              //   hideModal={() => setActive(false)}
-              hideModal={() => {
-                return;
-              }}
-              footer={
-                <Buttons
-                  onClick={() => {
-                    postInvoice(test);
-                  }}
-                >
-                  Save invoice
-                </Buttons>
-              }
-              projects={projects}
-              selectedProject={selectedProject}
-              setSelectedProject={setSelectedProject}
-              taskId={taskId}
-              updateTaskId={updateTaskId}
-            />
-            {/* <Buttons onClick={() => postInvoice(test)}>Send invoice</Buttons> */}
+            <span>{invoice.customer_name}/</span>
+            <span>
+              {invoice.due_date}/{invoice.amount}kr
+            </span>
+            <span>{invoice.status}</span>
+            <Buttons onClick={() => invoice.id && deleteInvoice(invoice.id)}>
+              Delete
+            </Buttons>
           </TodoListBar>
         ))}
       </TodoList>
+      <Modal
+        title={"create invoice"}
+        hideModal={() => setActive(false)}
+        active={active}
+        selectedProject={selectedProject}
+        setSelectedProject={setSelectedProject}
+        taskId={taskId}
+        updateTaskId={updateTaskId}
+      />
     </div>
   );
 }

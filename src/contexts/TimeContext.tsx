@@ -1,9 +1,10 @@
-import React, { Children, createContext, useState } from "react";
+import React, { Children, createContext, useState, useContext } from "react";
 import { TimesType } from "../types/timesTypes";
+import dayjs from "dayjs";
 
-export type TimeContext = {
-  times: TimesType;
-  setTimes: React.Dispatch<React.SetStateAction<TimesType>>;
+export type TimeLogContext = {
+  times: TimesType[];
+  setTimes: React.Dispatch<React.SetStateAction<TimesType[]>>;
 };
 
 interface Props {
@@ -18,16 +19,11 @@ const initialStateTimes = {
   end: 0,
 };
 
-export const TimeContext = createContext<TimeContext | null>(null);
+export const TimeContext = createContext<TimeLogContext | null>(null);
 
-const TimesProvider = ({ children }: Props) => {
-  const [times, setTimes] = useState<TimesType>({
-    start: 0,
-    taskId: 0,
-    time: 0,
-    id: 0,
-    end: 0,
-  });
+export const TimesProvider = ({ children }: Props) => {
+  const [times, setTimes] = useState<TimesType[]>([]);
+
   return (
     <TimeContext.Provider value={{ times, setTimes }}>
       {" "}
@@ -35,3 +31,10 @@ const TimesProvider = ({ children }: Props) => {
     </TimeContext.Provider>
   );
 };
+export function useTimeLogs() {
+  const context = useContext(TimeContext);
+  if (!context) {
+    throw new Error("Hooks not used insde same context.");
+  }
+  return context;
+}
